@@ -417,6 +417,21 @@
       .nav-inner{ justify-content:center; }
       .brand-name{ font-size:12px; }
     }
+
+    /* Apple-style scroll snapping */
+    html { scroll-snap-type: y mandatory; }
+    section { min-height: 100vh; scroll-snap-align: start; }
+
+    /* Animations */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s ease-out;
+    }
+    .animate-on-scroll.animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 
   <style>@view-transition { navigation: auto; }</style>
@@ -447,7 +462,7 @@
     </nav>
 
     <main class="hero" id="topo">
-      <div class="hero-inner">
+      <div class="hero-inner animate-on-scroll animate">
         <div class="kicker">PARECER MÉDICO-TÉCNICO DOCUMENTAL</div>
         <h1>PROVA MÉDICA</h1>
         <div class="sub">COM ANÁLISE TÉCNICA ESPECIALIZADA</div>
@@ -471,7 +486,7 @@
     </main>
 
     <section id="servicos" class="services-section">
-      <div class="services-inner">
+      <div class="services-inner animate-on-scroll">
         <h2 class="services-title">SERVIÇOS ESPECIALIZADOS</h2>
         <div class="card-stack">
 
@@ -545,7 +560,7 @@
     </section>
 
     <section id="sobre" class="about-section">
-      <div class="about-inner">
+      <div class="about-inner animate-on-scroll">
         <h2 class="about-title">DRA. JOYCE RADIS</h2>
         <div class="about-content">
           <div class="about-intro">
@@ -709,6 +724,22 @@
     </footer>
 
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        observer.observe(el);
+      });
+    });
+  </script>
 
   </body>
 </html>
